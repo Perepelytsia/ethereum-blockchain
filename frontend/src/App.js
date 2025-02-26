@@ -1,11 +1,14 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import logo from './logo.svg';
 import './App.css';
+//require('dotenv').config();
+
 
 function App() {
   const [provider, setProvider] = useState(null);
   const [blockNumber, setBlockNumber] = useState(null);
+  const [balance, setBalance] = useState('');
 
   useEffect(() => {
     const initializeProvider = async () => {
@@ -21,17 +24,24 @@ function App() {
 
   useEffect(() => {
     const getBlockNumber = async () => {
-        if (provider) {
-            setBlockNumber(provider.getBlockNumber());
-        }
+        setBlockNumber(await provider.getBlockNumber());
     };
-    getBlockNumber();
+    const getBalance = async () => {
+        const balanceBigNumber = await provider.getBalance(process.env.REACT_APP_WALLET_ADDRESS);
+        const balanceInEth = ethers.utils.formatEther(balanceBigNumber);
+        setBalance(balanceInEth + ' ether');
+    };
+    if (provider) {
+        getBalance();
+        getBlockNumber();
+    }
   }, [provider]);
 
   return (
     <div>
       <h1>Ethers.js and React Integration</h1>
       <p>Block Number <b>{blockNumber}</b></p>
+      <p>Balance <b>{balance}</b></p>
     </div>
   );
 }
