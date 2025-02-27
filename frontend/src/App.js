@@ -28,6 +28,7 @@ function App() {
 
   useEffect(() => {
     initializeProvider();
+    console.log(ethers.providers.getNetwork(11155111));
   }, []);
 
   useEffect(() => {
