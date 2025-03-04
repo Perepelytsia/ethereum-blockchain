@@ -37,6 +37,15 @@ function AppContract() {
         const supply = await usdtContract.totalSupply();
         const formattedSupply = ethers.utils.formatUnits(supply, decimals);
         setTotalSupply(formattedSupply);
+
+        usdtContract.on("Transfer", (from, to, value, event) => {
+            let info = {
+                from: from,
+                to: to,
+                data: event
+            };
+            console.log(info);
+        });
     };
 
     useEffect(() => {
