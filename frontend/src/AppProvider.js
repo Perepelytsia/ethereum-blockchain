@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 
-function App() {
+function AppProvider() {
   const [provider, setProvider] = useState(null);
   const [blockNumber, setBlockNumber] = useState(null);
   const [balance, setBalance] = useState('');
@@ -47,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppProvider;
