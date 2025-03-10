@@ -13,7 +13,7 @@ function AppTransfer() {
     // Connect MetaMask Wallet
     const connectWallet = async () => {
         if (window.ethereum) {
-            const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+            await window.ethereum.request({ method: "eth_requestAccounts" });
             try {
                 await window.ethereum.request({
                     method: "wallet_switchEthereumChain",
@@ -23,7 +23,7 @@ function AppTransfer() {
             } catch (error) {
                 console.log(error);
             }
-            await window.ethereum.request({ method: "eth_requestAccounts" });
+            const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = web3Provider.getSigner();
             setSigner(signer);
             setAccount(await signer.getAddress());
@@ -33,7 +33,19 @@ function AppTransfer() {
     };
 
     const makeTransfer = async () => {
-        console.log("here");
+        console.log("make transaction");
+        const tx = await signer.sendTransaction({
+            from: process.env.REACT_APP_WALLET_MASTER_ADDRESS,
+            to: process.env.REACT_APP_WALLET_SLAVE_ADDRESS,
+            value: ethers.utils.parseUnits("0.0000001", "ether"),
+            gasLimit: gasPrice,
+            maxPriorityFeePerGas: ethers.utils.parseUnits("1", "gwei"),
+            chainId: 11155111,
+        });
+        console.log("Transaction sent! Waiting for confirmation...");
+        console.log(`Tx Hash: ${tx.hash}`);
+        await tx.wait();
+        console.log("Transaction confirmed!");
     };
 
     // Fetch Gas Price
