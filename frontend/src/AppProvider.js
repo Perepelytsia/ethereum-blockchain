@@ -21,7 +21,7 @@ function AppProvider() {
     setBlockNumber(await provider.getBlockNumber());
   };
   const getBalance = async () => {
-    const balanceBigNumber = await provider.getBalance(process.env.REACT_APP_WALLET_ADDRESS);
+    const balanceBigNumber = await provider.getBalance(process.env.REACT_APP_WALLET_MASTER_ADDRESS);
     const balanceInEth = ethers.utils.formatEther(balanceBigNumber);
     setBalance(balanceInEth + ' ether');
   };
