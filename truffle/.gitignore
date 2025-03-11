@@ -1,0 +1,5 @@
+node_modules/        # Installed dependencies (use package.json instead)
+build/              # Compiled contract artifacts (can be regenerated)
+cache/              # Truffle cache files
+coverage/           # Test coverage reports
+.env                # Environment variables (like private keys)
