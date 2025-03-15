@@ -11,3 +11,7 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.ts
 ```
+
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' https://sepolia.infura.io/v3/INFURA_KEY
+https://sepolia.etherscan.io/address/0xE61ac625438c57aB11a6513bfB2BD18039F53706
+
